@@ -13,6 +13,11 @@ This module assumes that the following items:
     - `ARM_CLIENT_SECRET`
 - Powershell 6+ is installed and can install Az.Accounts and Az.DesktopVirtualization modules.
 
+This module has the following parameters that can be set:
+- `hostpool_resource_group` - **Required** - Name of the Resource Group containing the Hostpool.
+- `hostpool_name` - **Required** - Name of the Hostpool.
+- `token_valid_hours` - **Not Required** - Number of hours before token should expire (defaults to 3).
+
 This module will have the following attributes output:
 - `token` - The Hostpool Registration Info Token
 - `expiration_time` - The Hostpool Registration Info Token Expiration Date/Time
@@ -20,7 +25,7 @@ This module will have the following attributes output:
 Here's an example:
 ```terraform
 module "hostpool" {
-    source              = "git::https://github.com/idexcorp-cit/az-avd-personal-hostpool-module.git?ref=v0.1.0"
+    source              = "git::https://github.com/idexcorp-cit/az-avd-personal-hostpool-module.git?ref=v0.1.1"
 
     resource_prefix = "eus-avd"
     location        = "eastus"
@@ -30,7 +35,7 @@ module "hostpool" {
 }
 
 module "hostpool_token" {
-    source                  = "git::https://github.com/idexcorp-cit/az-avd-hostpool-token-module.git?ref=v0.1.0"
+    source                  = "git::https://github.com/idexcorp-cit/az-avd-hostpool-token-module.git?ref=v0.1.1"
 
     hostpool_resource_group = module.hostpool.resource_group_name
     hostpool_name           = module.hostpool.hostpool_name
@@ -50,7 +55,7 @@ resource "azurerm_resource_group" "avd_host" {
 }
 
 module "host" {
-    source                  = "git::https://github.com/idexcorp-cit/az-avd-personal-host-module.git?ref=v0.1.0"
+    source                  = "git::https://github.com/idexcorp-cit/az-avd-personal-host-module.git?ref=v0.1.1"
 
     for_each                = var.avd_users
 
